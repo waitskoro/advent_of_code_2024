@@ -1,6 +1,6 @@
 PATH = "./2024/day_1/text.txt"
 
-def get_lists_from_string(stroke):
+def get_lists_from_string(data):
     number_of_characters = len(data)
 
     left_list = [];
@@ -14,9 +14,26 @@ def get_lists_from_string(stroke):
 
     return left_list, right_list
 
+def getTruncate(left_list, right_list):
+    sum = 0
+
+    while(len(left_list) > 0 and len(right_list) > 0):
+        min_left = min(left_list)
+        min_right = min(right_list)
+
+        if min_left > min_right:
+            sum = sum + (int(min_left) - int(min_right))
+        if min_right > min_left:
+            sum = sum + (int(min_right) - int(min_left))
+
+        left_list.remove(min_left)
+        right_list.remove(min_right)
+
+    print(sum)
+
 if __name__ == '__main__':
     file = open(PATH, "r")
     data = file.read().split()
     
     lists = get_lists_from_string(data)
-    print(lists)
+    getTruncate(lists[0], lists[1])
