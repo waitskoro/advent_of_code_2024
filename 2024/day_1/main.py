@@ -1,3 +1,5 @@
+import copy
+
 PATH = "./2024/day_1/text.txt"
 
 def get_lists_from_string(data):
@@ -14,9 +16,10 @@ def get_lists_from_string(data):
 
     return left_list, right_list
 
-def getTruncate(left_list, right_list):
-    sum = 0
 
+def getDifferenceAddition(left_list, right_list):
+    sum = 0
+    
     while(len(left_list) > 0 and len(right_list) > 0):
         min_left = min(left_list)
         min_right = min(right_list)
@@ -29,11 +32,29 @@ def getTruncate(left_list, right_list):
         left_list.remove(min_left)
         right_list.remove(min_right)
 
-    print(sum)
+    print("Сумма для первого решения:", sum)
+
+
+def getDifferenceMultiplication(left_list, right_list):
+    sum = 0
+
+    for i in range(len(left_list)):
+        count = 0
+
+        for j in range(len(right_list)):
+            if left_list[i] == right_list[j]:
+                count = count + 1
+        
+        sum = sum + (int(left_list[i]) * count)
+        count = 0
+
+    print("Сумма для второго решения:", sum)
 
 if __name__ == '__main__':
     file = open(PATH, "r")
     data = file.read().split()
     
     lists = get_lists_from_string(data)
-    getTruncate(lists[0], lists[1])
+
+    getDifferenceAddition(copy.copy(lists[0]), copy.copy(lists[1]))
+    getDifferenceMultiplication(lists[0], lists[1])
